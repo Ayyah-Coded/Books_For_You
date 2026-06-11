@@ -18,6 +18,7 @@ import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
 import { Image } from "expo-image";
 import Loader from "../../components/Loader";
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function Profile() {
