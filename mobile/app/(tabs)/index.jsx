@@ -72,8 +72,9 @@ export default function Home() {
   );
 
   useEffect(() => {
+    if (!token) return;
     fetchBooks();
-  }, [fetchBooks]);
+  }, [token, fetchBooks]);
 
   const handleLoadMore = async () => {
     if (hasMore && !loading && !refreshing) {
