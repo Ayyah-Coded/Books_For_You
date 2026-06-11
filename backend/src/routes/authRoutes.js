@@ -4,6 +4,10 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
+const generateToken = (userId) => {
+  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "15d" });
+};
+
 router.post("/register", async (req, res) => {
   try {
     const { email, username, password } = req.body;
@@ -43,7 +47,7 @@ router.post("/register", async (req, res) => {
 
     await user.save();
 
-    
+    const token = generateToken(user._id);
 
     res.status(201).json({
       token,
@@ -75,7 +79,7 @@ router.post("/login", async (req, res) => {
     const isPasswordCorrect = await user.comparePassword(password);
     if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
 
-    
+    const token = generateToken(user._id);
 
     res.status(200).json({
       token,
