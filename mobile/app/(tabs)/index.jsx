@@ -49,13 +49,13 @@ export default function Home() {
         const uniqueBooks =
           refresh || pageNum === 1
             ? data.books
-            : Array.from(new Set([...books, ...data.books].map((book) => book._id))).map((id) =>
-                [...books, ...data.books].find((book) => book._id === id)
+            : Array.from(
+                new Map([...books, ...data.books].map(book => [book._id, book])).values()
               );
 
         setBooks(uniqueBooks);
 
-        setHasMore(pageNum < data.totalPages);
+        setHasMore(data.totalPages != null && pageNum < data.totalPages);
         setPage(pageNum);
       } catch (error) {
         console.log("Error fetching books", error);
@@ -68,7 +68,7 @@ export default function Home() {
         }
       }
     },
-    [token, books]
+    [token]
   );
 
   useEffect(() => {
@@ -126,7 +126,7 @@ export default function Home() {
       <FlatList
         data={books}
         renderItem={renderItem}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item, index) => item._id || `book-${index}`}
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
         refreshControl={

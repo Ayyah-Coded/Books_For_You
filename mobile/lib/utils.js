@@ -8,7 +8,9 @@ export function formatMemberSince(dateString) {
 
 // this function will convert the createdAt to this format: "May 15, 2023"
 export function formatPublishDate(dateString) {
+  if (!dateString) return "N/A";
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) return "N/A";
   const month = date.toLocaleString("default", { month: "long" });
   const day = date.getDate();
   const year = date.getFullYear();

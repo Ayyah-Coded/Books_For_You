@@ -25,16 +25,18 @@ export default function RootLayout() {
 
   useEffect(() => {
     checkAuth();
-  }, [checkAuth]);
+  }, []);
 
   // handle navigation based on the auth state
   useEffect(() => {
+    if (!fontsLoaded) return;
+
     const inAuthScreen = segments[0] === "(auth)";
     const isSignedIn = user && token;
 
     if (!isSignedIn && !inAuthScreen) router.replace("/(auth)");
     else if (isSignedIn && inAuthScreen) router.replace("/(tabs)");
-  }, [user, token, segments, router]);
+  }, [user, token, segments, router, fontsLoaded]);
 
   return (
     <SafeAreaProvider>

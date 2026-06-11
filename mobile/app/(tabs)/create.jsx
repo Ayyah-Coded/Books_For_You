@@ -32,7 +32,6 @@ export default function Create() {
   const router = useRouter();
   const { token } = useAuthStore();
 
-  console.log(token);
 
   const pickImage = async () => {
     try {
@@ -48,7 +47,7 @@ export default function Create() {
 
       // launch image library
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: "images",
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
         quality: 0.5, // lower quality for smaller base64
@@ -65,7 +64,7 @@ export default function Create() {
         } else {
           // otherwise, convert to base64
           const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, {
-            encoding: FileSystem.EncodingType.Base64,
+            encoding: "base64",
           });
 
           setImageBase64(base64);

@@ -17,7 +17,6 @@ import LogoutButton from "../../components/LogoutButton";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
 import { Image } from "expo-image";
-import { sleep } from ".";
 import Loader from "../../components/Loader";
 
 export default function Profile() {
@@ -66,7 +65,7 @@ export default function Profile() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Failed to delete book");
 
-      setBooks(books.filter((book) => book._id !== bookId));
+      setBooks((prevBooks) => prevBooks.filter((book) => book._id !== bookId));
       Alert.alert("Success", "Recommendation deleted successfully");
     } catch (error) {
       Alert.alert("Error", error.message || "Failed to delete recommendation");
